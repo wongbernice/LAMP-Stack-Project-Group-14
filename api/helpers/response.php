@@ -15,3 +15,4 @@
  * USED BY:
  *   - All endpoints to return responses in a consistent structure.
  */
+?>

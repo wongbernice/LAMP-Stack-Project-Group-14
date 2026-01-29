@@ -30,3 +30,4 @@
  *   - ../helpers/response.php
  *   - ../helpers/auth.php (optional if protected)
  */
+?>

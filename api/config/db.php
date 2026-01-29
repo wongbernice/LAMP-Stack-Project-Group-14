@@ -17,3 +17,4 @@
  *   - Keep credentials in one place.
  *   - Use prepared statements in all queries to prevent SQL injection.
  */
+?>

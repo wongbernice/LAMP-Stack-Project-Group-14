@@ -16,3 +16,4 @@
  * NOTES:
  *   - Keep auth checks here so endpoints stay clean and consistent.
  */
+?>

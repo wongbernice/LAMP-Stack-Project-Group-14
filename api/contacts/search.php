@@ -1,6 +1,5 @@
 <?php
 //copied from colors project
-
 $inData = getRequestInfo();
 
 $searchResults = "";
@@ -65,5 +64,4 @@ function returnWithInfo( $searchResults )
     $retValue = '{"results":[' . $searchResults . '],"error":""}';
     sendResultInfoAsJson( $retValue );
 }
-
 ?>

@@ -14,4 +14,4 @@
  * NOTES:
  *   - Avoid storing secrets here (DB passwords, API keys). Put secrets in environment vars if possible.
  */
-
+?>
