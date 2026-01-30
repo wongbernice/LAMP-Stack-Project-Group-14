@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script type="text/javascript" src="/frontend/JS/code.js"></script>
+        <script type="text/javascript" src="../JS/code.js"></script>
+        <link rel="stylesheet" href="../CSS/login.css">
     </head>
 
-    <body>
-        <h1>Log In</h1>
-        <input type="text" placeholder="Username" id="loginName"/>
-        <br>
-        <input type="password" placeholder="Password" id="loginPassword"/>
-        <br>
-        <button type="button" id="loginButton" onclick="doLogin();">Enter</button>
-        <a href="signUp.html">Sign Up</a>
-        <span id="loginResult"></span>
+    <body id="loginBody">
+        <main id="loginMain">
+            <h1 id="loginTitle">Log In</h1>
+            <input type="text" placeholder="Username" id="loginName"/>
+            <br>
+            <input type="password" placeholder="Password" id="loginPassword"/>
+            <br>
+            <button type="button" id="loginButton" onclick="doLogin();">Enter</button>
+            <a id="signUpTag" href="signUp.html">Sign Up</a>
+            <span id="loginResult"></span>
+        </main>
     </body>
 </html>
