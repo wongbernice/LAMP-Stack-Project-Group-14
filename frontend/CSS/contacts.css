@@ -1,0 +1,346 @@
+:root {
+  /* colors */
+  --mint: #C2E5DF;
+  --pink: #F3D4F3;
+  
+
+  --bg: rgb(231, 231, 231);
+  --card: #ffffff;
+
+  --text: rgba(20, 20, 20, 0.92);
+  --muted: rgba(20, 20, 20, 0.62);
+
+  --border: rgba(20, 20, 20, 0.12);
+
+  /* UI accents */
+  --accent: var(--mint);
+  --shadow: 0 16px 40px rgba(0,0,0,.10);
+  --radius: 14px;
+  --radius2: 10px;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+/* Font for UI */
+body {
+  margin: 0;
+  font-family: system-ui, Arial, sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .92em;
+}
+
+.container {
+  max-width: 1250px;
+  margin: 24px auto 64px;
+  padding: 0 16px;
+}
+
+/* Top bar, pink */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+
+  background: var(--pink);                 
+  border-bottom: 3px solid var(--mint);    
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.topbar__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand__mark { font-size: 20px; }
+.brand__name { font-weight: 700; letter-spacing: .2px; }
+
+/* Card with contacts info */
+.card {
+  background: var(--card);
+  border: 3px solid var(--mint);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.card__header {
+  padding: 18px 18px 10px;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px solid rgba(20,20,20,0.10);
+  background: #fff;
+}
+
+.h1 {
+  margin: 0 0 6px;
+  font-size: 24px;
+}
+.h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.muted { color: var(--muted); margin: 0; }
+
+.toolbar { 
+    padding: 14px 18px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: 
+    space-between;
+    gap: 12px; 
+    }
+
+
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+/* search bar input box styling */
+.search input {
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: var(--radius2);
+  border: 3px solid var(--pink);
+  outline: none;
+  background: #fff;
+  color: var(--text);
+}
+
+.search input:focus {
+  border-color: var(--peach);
+  outline: none;
+  box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+  transition: border-color 0.3s ease;
+}
+
+.meta { min-width: 120px; text-align: right; }
+
+.tableWrap {
+  width: 100%;
+  overflow: auto;
+  border-top: 1px solid rgba(20,20,20,0.10);
+
+  max-height: 420px;
+  
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+
+.table th, .table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(20,20,20,0.10);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table thead th {
+  font-size: 12px;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(194,229,223,0.28); 
+}
+
+.table tbody tr:hover { background: rgba(243,212,243,0.22); }
+
+.col-actions { width: 210px; }
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.col-actions { width: 210px; }
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.table thead th.col-actions {
+  padding-left: 64px; 
+}
+
+
+/* Buttons with hover effect, change to darker color */
+.btn {
+  border: none;
+  background: #fff;
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  border: 3px solid rgba(20,20,20,0.10);
+
+  transition: filter 0.15s ease, transform 0.05s ease;
+}
+
+/* Hover = slightly darker */
+.btn:hover {
+  filter: brightness(0.95);
+}
+
+/* Click = a bit darker + press */
+.btn:active {
+  filter: brightness(0.90);
+  transform: translateY(1px);
+}
+
+.btn--primary {
+  border: 3px solid var(--pink);
+  background: var(--pink);
+  color: black;
+  transition: filter 0.15s ease, transform 0.05s ease;
+}
+
+
+/* Edit button*/
+.btn--secondary {
+  border: 3px solid var(--pink);
+  background: var(--pink);
+  color: black;
+}
+
+.btn--secondary:hover {
+  filter: brightness(0.95);
+}
+.btn--secondary:active {
+  filter: brightness(0.90);
+}
+
+
+/* Logout button uses this to have pink fill on pink background */
+.btn--ghost {
+  background: transparent;
+  border: 3px solid rgba(20,20,20,0.10);
+}
+
+.iconBtn {
+  border: 3px solid rgba(20,20,20,0.10);
+  background: #fff;
+  color: var(--text);
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.iconBtn:hover { background: rgba(243,212,243,0.18); }
+
+.emptyState {
+  padding: 48px 18px;
+  text-align: center;
+}
+.emptyState__icon { font-size: 40px; margin-bottom: 10px; }
+.emptyState__title { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
+.emptyState__text { color: var(--muted); margin-bottom: 14px; }
+
+/* Add contact popup/Modal */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20,20,20,0.35);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.modal {
+  width: min(520px, 100%);
+  background: #fff;
+  border: 3px solid var(--mint);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.modal__header {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(20,20,20,0.10);
+  background: #fff;
+}
+
+.form {
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.form label span {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.form input {
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: var(--radius2);
+  border: 3px solid var(--pink);
+  outline: none;
+  background: #fff;
+  color: var(--text);
+}
+
+.form input:focus {
+  border-color: var(--peach);
+  outline: none;
+  box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+  transition: border-color 0.3s ease;
+}
+
+.form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.form__hint { margin: 0; font-size: 12px; }
+
+.hide-sm { display: table-cell; }
+@media (max-width: 720px) {
+  .card__header { flex-direction: column; align-items: stretch; }
+  .meta { display: none; }
+  .form__row { grid-template-columns: 1fr; }
+  .hide-sm { display: none; }
+  .table { min-width: 520px; }
+}
+
+/* Keeps modal hidden for now I'll change later */
+[hidden] {
+  display: none !important;
+}
