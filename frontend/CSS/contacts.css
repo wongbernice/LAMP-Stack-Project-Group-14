@@ -11,9 +11,6 @@
   --muted: rgba(20, 20, 20, 0.62);
 
   --border: rgba(20, 20, 20, 0.12);
-
-  /* UI accents */
-  --accent: var(--mint);
   --shadow: 0 16px 40px rgba(0,0,0,.10);
   --radius: 14px;
   --radius2: 10px;
@@ -130,7 +127,6 @@ code {
 }
 
 .search input:focus {
-  border-color: var(--peach);
   outline: none;
   box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
   transition: border-color 0.3s ease;
@@ -177,17 +173,9 @@ code {
   justify-content: flex-end;
 }
 
-.col-actions { width: 210px; }
-.actions {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-}
-
 .table thead th.col-actions {
   padding-left: 64px; 
 }
-
 
 /* Buttons with hover effect, change to darker color */
 .btn {
@@ -254,14 +242,6 @@ code {
 }
 .iconBtn:hover { background: rgba(243,212,243,0.18); }
 
-.emptyState {
-  padding: 48px 18px;
-  text-align: center;
-}
-.emptyState__icon { font-size: 40px; margin-bottom: 10px; }
-.emptyState__title { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
-.emptyState__text { color: var(--muted); margin-bottom: 14px; }
-
 /* Add contact popup/Modal */
 .modalBackdrop {
   position: fixed;
@@ -316,7 +296,6 @@ code {
 }
 
 .form input:focus {
-  border-color: var(--peach);
   outline: none;
   box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
   transition: border-color 0.3s ease;
@@ -330,15 +309,6 @@ code {
 }
 
 .form__hint { margin: 0; font-size: 12px; }
-
-.hide-sm { display: table-cell; }
-@media (max-width: 720px) {
-  .card__header { flex-direction: column; align-items: stretch; }
-  .meta { display: none; }
-  .form__row { grid-template-columns: 1fr; }
-  .hide-sm { display: none; }
-  .table { min-width: 520px; }
-}
 
 /* Keeps modal hidden for now I'll change later */
 [hidden] {
