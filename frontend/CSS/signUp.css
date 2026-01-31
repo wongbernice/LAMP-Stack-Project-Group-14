@@ -1,4 +1,4 @@
-.loginBody {
+.signUpBody {
     background-color: rgb(231, 231, 231);
     padding: 0;
     display: flex;
@@ -10,7 +10,7 @@
     overflow: hidden;
 }
 
-#loginContTitle {
+#signUpContTitle {
     display: block;
     background-color: #F3D4F3;
     width: 100%;
@@ -19,7 +19,7 @@
     border-bottom: 3px solid #C2E5DF;
 }
 
-.loginMain{
+.signUpMain{
     background-color: white;
     text-align: center;
     display: flex;
@@ -39,11 +39,11 @@
     box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
 }
 
-#loginTitle {
+#signUpTitle {
     font-size: 30px;
 }
 
-#loginName, #loginPassword {
+#signUpFName, #signUpLName, #signUpUName, #signUpPass, #signUpPass2 {
     padding: 5%;
     width: 80%;
     height: 100%;
@@ -54,18 +54,18 @@
     border-width: 3px;
 }
 
-#loginName:focus, #loginPassword:focus {
+#signUpFName:focus, #signUpLName:focus, #signUpUName:focus, #signUpPass:focus, #signUpPass2:focus {
     border-color: #F3D4F3; 
     outline: none;
     box-shadow: 0 0 8px rgba(74, 144, 226, 0.3); 
     transition: border-color 0.3s ease;
 }
 
-#noAccountp {
+#haveAccountp {
     margin: 0;
 }
 
-#loginButton {
+#signUpButton {
     width: 30%;
     height: 100%;
     padding: 3% 2%;
@@ -81,10 +81,10 @@
     transition: 0.6s ease-out;
 }
 
-#loginButton:hover {
+#signUpButton:hover {
     background-position: right;
 }
 
-#loginResult {
+#signUpResult {
     color: rgb(200, 1, 1);
 }
