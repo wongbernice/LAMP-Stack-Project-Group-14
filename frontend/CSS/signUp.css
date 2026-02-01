@@ -1,4 +1,7 @@
 .signUpBody {
+    font-family: system-ui, sans-serif;
+    font-size: .92em;
+
     background-color: rgb(231, 231, 231);
     padding: 0;
     display: flex;
