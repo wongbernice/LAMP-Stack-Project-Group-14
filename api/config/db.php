@@ -16,4 +16,21 @@
  * NOTES:
  *   - Keep credentials in one place.
  *   - Use prepared statements in all queries to prevent SQL injection.
+ * 
  */
+// api/config/db.php
+$host = "localhost";
+$user = "YOUR_DB_USER";
+$pass = "YOUR_DB_PASS";
+$db   = "YOUR_DB_NAME";
+
+$conn = new mysqli($host, $user, $pass, $db);
+
+if ($conn->connect_error) {
+  // don't echo raw text; return JSON error consistently
+  header("Content-Type: application/json");
+  echo json_encode(["id" => -1, "error" => $conn->connect_error]);
+  exit();
+}
+?>
+
