@@ -8,19 +8,26 @@
     margin: auto;
     align-items: center;
     min-height: 100vh;
+    min-width: 100vw;
     flex-direction: column;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
-#signUpContTitle {
-    display: block;
+.brandSignUp {
+    position: sticky;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     background-color: #F3D4F3;
-    width: 100%;
-    margin: 0;
-    padding: 1%;
     border-bottom: 3px solid #C2E5DF;
+    margin: 0;
+    width: 100vw;
+    padding: 14px 16px;
+    padding-left: 50px;
 }
+
+#signUpContTitle {font-size: 20px;}
 
 .signUpMain{
     background-color: white;
@@ -78,14 +85,7 @@
     border-radius: 10px;
     border: none;
 
-    background-image: linear-gradient(to right, #C2E5DF 50%, #F3D4F3 50%);
-    color: black;
-    background-size: 200%;
-    transition: 0.6s ease-out;
-}
-
-#signUpButton:hover {
-    background-position: right;
+    background-color: #F3D4F3;
 }
 
 #signUpResult {

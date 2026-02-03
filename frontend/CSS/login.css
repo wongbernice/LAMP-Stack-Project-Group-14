@@ -8,19 +8,26 @@
     margin: auto;
     align-items: center;
     min-height: 100vh;
+    min-width: 100vw;
     flex-direction: column;
     box-sizing: border-box;
     overflow: hidden;
 }
 
-#loginContTitle {
-    display: block;
+.brandLogin {
+    position: sticky;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     background-color: #F3D4F3;
-    width: 100%;
-    margin: 0;
-    padding: 1%;
     border-bottom: 3px solid #C2E5DF;
+    margin: 0;
+    width: 100vw;
+    padding: 14px 16px;
+    padding-left: 50px;
 }
+
+#loginContTitle {font-size: 20px;}
 
 .loginMain{
     background-color: white;
@@ -42,9 +49,7 @@
     box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
 }
 
-#loginTitle {
-    font-size: 30px;
-}
+#loginTitle {font-size: 30px;}
 
 #loginName, #loginPassword {
     padding: 5%;
@@ -64,9 +69,7 @@
     transition: border-color 0.3s ease;
 }
 
-#noAccountp {
-    margin: 0;
-}
+#noAccountp {margin: 0;}
 
 #loginButton {
     width: 30%;
@@ -78,16 +81,7 @@
     border-radius: 10px;
     border: none;
 
-    background-image: linear-gradient(to right, #C2E5DF 50%, #F3D4F3 50%);
-    color: black;
-    background-size: 200%;
-    transition: 0.6s ease-out;
+    background-color: #F3D4F3;
 }
 
-#loginButton:hover {
-    background-position: right;
-}
-
-#loginResult {
-    color: rgb(200, 1, 1);
-}
+#loginResult {color: rgb(200, 1, 1);}
