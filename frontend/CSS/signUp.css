@@ -1,7 +1,7 @@
-.loginBody {
+.signUpBody {
     font-family: system-ui, sans-serif;
     font-size: .92em;
-    
+
     background-color: rgb(231, 231, 231);
     padding: 0;
     display: flex;
@@ -11,10 +11,10 @@
     min-width: 100vw;
     flex-direction: column;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow-y: auto;
 }
 
-.brandLogin {
+.brandSignUp {
     position: sticky;
     display: flex;
     align-items: center;
@@ -27,9 +27,9 @@
     padding-left: 50px;
 }
 
-#loginContTitle {font-size: 20px;}
+#signUpContTitle {font-size: 20px;}
 
-.loginMain{
+.signUpMain{
     background-color: white;
     text-align: center;
     display: flex;
@@ -49,9 +49,11 @@
     box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
 }
 
-#loginTitle {font-size: 30px;}
+#signUpTitle {
+    font-size: 30px;
+}
 
-#loginName, #loginPassword {
+#signUpFName, #signUpLName, #signUpUName, #signUpPass, #signUpPass2 {
     padding: 5%;
     width: 80%;
     height: 100%;
@@ -62,16 +64,18 @@
     border-width: 3px;
 }
 
-#loginName:focus, #loginPassword:focus {
+#signUpFName:focus, #signUpLName:focus, #signUpUName:focus, #signUpPass:focus, #signUpPass2:focus {
     border-color: #F3D4F3; 
     outline: none;
     box-shadow: 0 0 8px rgba(74, 144, 226, 0.3); 
     transition: border-color 0.3s ease;
 }
 
-#noAccountp {margin: 0;}
+#haveAccountp {
+    margin: 0;
+}
 
-#loginButton {
+#signUpButton {
     width: 30%;
     height: 100%;
     padding: 3% 2%;
@@ -84,4 +88,6 @@
     background-color: #F3D4F3;
 }
 
-#loginResult {color: rgb(200, 1, 1);}
+#signUpResult {
+    color: rgb(200, 1, 1);
+}
