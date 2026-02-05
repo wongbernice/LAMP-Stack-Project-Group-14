@@ -7,7 +7,7 @@
  *   "lastName": "Villanueva",
  *   "phone": "407-555-1234",
  *   "email": "angelo@example.com",
- *   "userId": 1  
+ *   "userId": 1
  * }
  *
  * RESPONSE FORMAT (consistent):
