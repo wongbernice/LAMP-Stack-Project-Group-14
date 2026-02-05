@@ -34,24 +34,26 @@ $firstName = "";
 $lastName = "";
 
 $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 if( $conn->connect_error )
 {
     returnWithError( $conn->connect_error );
 }
 else
 {
-    $stmt = $conn->prepare("INSERT INTO Users ID,firstName,lastName,Login,Password WHERE ID=? AND firstName=? and lastName=? AND Login=? AND Password =?");
+    $stmt = $conn->prepare("SELECT Login,Password,ID,firstName,lastName FROM Users WHERE Login=? AND Password =?");
     $stmt->bind_param("ss", $inData["login"], $inData["password"]);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if( $row = $result->fetch_assoc()  )
     {
-        // TODO: Register
+        returnWithError("User already created");
     }
     else
     {
-        // TODO
+        returnWithInfo( $row['Login'], $row['Password'], $row['ID']);
+        return "New user created.";
     }
 
     $stmt->close();
