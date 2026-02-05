@@ -1,33 +1,61 @@
 <?php
-/**
- * FILE: api/contacts/edit.php
- * OWNER: A (Angelo)
- * PURPOSE:
- *   Update an existing contact (Edit / Update).
- *
- * WHAT IT DOES:
- *   - Accepts a contact id and fields to update.
- *   - Validates that the id exists and input is valid.
- *   - Updates the matching contact row in the database.
- *   - Returns JSON success or JSON error.
- *
- * EXPECTED METHOD:
- *   - POST (common for simple PHP setups) or PUT if you later upgrade routing
- *
- * EXPECTED INPUT:
- *   - JSON body or form fields (typical):
- *       id (required), name/phone/email/etc. (one or more fields)
- *
- * OUTPUT:
- *   - JSON success: updated contact info or confirmation message
- *   - JSON error: missing id, not found, validation fail, or DB update fail
- *
- * AUTH:
- *   - If contacts are private, call an auth helper (e.g., require_auth()).
- *
- * DEPENDS ON:
- *   - ../config/db.php
- *   - ../helpers/response.php
- *   - ../helpers/auth.php (optional if protected)
- */
+
+require_once __DIR__ . "/../helpers/headers.php";
+require_once __DIR__ . "/../helpers/request.php";
+require_once __DIR__ . "/../helpers/response.php";
+require_once __DIR__ . "/../config/db.php";
+
+$inData = getRequestInfo();
+
+$contactId = $inData["id"] ?? "";
+$userId    = $inData["userId"] ?? "";
+
+$firstName = trim($inData["firstName"] ?? "");
+$lastName  = trim($inData["lastName"] ?? "");
+$phone     = trim($inData["phone"] ?? "");
+$email     = trim($inData["email"] ?? "");
+
+
+if ($contactId === "" || $userId === "") {
+  returnWithError("Missing required fields: id, userId");
+}
+
+if ($firstName === "" && $lastName === "" && $phone === "" && $email === "") {
+  returnWithError("No fields to update");
+}
+
+/***********************
+ * UPDATE CONTACT
+ ***********************/
+$stmt = $conn->prepare(
+  "UPDATE Contacts
+   SET FirstName = ?, LastName = ?, Phone = ?, Email = ?
+   WHERE ID = ? AND UserID = ?"
+);
+
+if (!$stmt) {
+  returnWithError($conn->error);
+}
+
+$stmt->bind_param(
+  "ssssii",
+  $firstName,
+  $lastName,
+  $phone,
+  $email,
+  $contactId,
+  $userId
+);
+
+if ($stmt->execute()) {
+  if ($stmt->affected_rows === 0) {
+    returnWithError("Contact not found or no changes made");
+  }
+  returnWithInfo("Contact updated", (int)$contactId);
+} else {
+  returnWithError($stmt->error);
+}
+
+$stmt->close();
+$conn->close();
 ?>

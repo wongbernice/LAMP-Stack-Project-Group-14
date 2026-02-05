@@ -1,35 +1,13 @@
-.loginBody {
-    font-family: system-ui, sans-serif;
-    font-size: .92em;
-    
+#loginBody {
     background-color: rgb(231, 231, 231);
     padding: 0;
     display: flex;
     margin: auto;
     align-items: center;
     min-height: 100vh;
-    min-width: 100vw;
-    flex-direction: column;
-    box-sizing: border-box;
-    overflow: hidden;
 }
 
-.brandLogin {
-    position: sticky;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background-color: #F3D4F3;
-    border-bottom: 3px solid #C2E5DF;
-    margin: 0;
-    width: 100vw;
-    padding: 14px 16px;
-    padding-left: 50px;
-}
-
-#loginContTitle {font-size: 20px;}
-
-.loginMain{
+#loginMain{
     background-color: white;
     text-align: center;
     display: flex;
@@ -40,16 +18,16 @@
 
     border-radius: 10px;
     border-style: solid;
-    border-color: #79bfb3;
+    border-color: #C2E5DF;
     border-width: 3px;
     
     width: 20%;
     height: 100%;
-
-    box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
 }
 
-#loginTitle {font-size: 30px;}
+#loginTitle {
+    
+}
 
 #loginName, #loginPassword {
     padding: 5%;
@@ -58,21 +36,19 @@
     
     border-radius: 10px;
     border-style: solid;
-    border-color: #C2E5DF;
+    border-color: #F3D4F3;
     border-width: 3px;
 }
 
 #loginName:focus, #loginPassword:focus {
-    border-color: #F3D4F3; 
+    border-color: #FFCAA4; 
     outline: none;
     box-shadow: 0 0 8px rgba(74, 144, 226, 0.3); 
     transition: border-color 0.3s ease;
 }
 
-#noAccountp {margin: 0;}
-
 #loginButton {
-    width: 30%;
+    width: 50%;
     height: 100%;
     padding: 3% 2%;
     font-size: large;
@@ -81,7 +57,12 @@
     border-radius: 10px;
     border: none;
 
-    background-color: #F3D4F3;
+    background-image: linear-gradient(to right, #F3D4F3 50%, #FFCAA4 50%);
+    color: black;
+    background-size: 200%;
+    transition: 0.6s ease-out;
 }
 
-#loginResult {color: rgb(200, 1, 1);}
+#loginButton:hover {
+    background-position: right;
+}

@@ -1,20 +1,20 @@
 <?php
-/**
- * FILE: api/config/db.php
- * PURPOSE:
- *   Create and expose the database connection for the API.
- *
- * WHAT IT DOES:
- *   - Connects to MySQL/MariaDB (PDO or mysqli).
- *   - Provides a connection handle (e.g., $pdo or $conn) for queries.
- *   - Should fail gracefully with a JSON error if connection cannot be made.
- *
- * USED BY:
- *   - auth/login.php, auth/register.php
- *   - contacts/add.php, contacts/search.php, contacts/edit.php, contacts/delete.php
- *
- * NOTES:
- *   - Keep credentials in one place.
- *   - Use prepared statements in all queries to prevent SQL injection.
- */
+// api/config/db.php
+
+$DB_HOST = "localhost";
+$DB_USER = "apiuser";
+$DB_PASS = "apipassword";
+$DB_NAME = "COP4331";
+
+$conn = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+
+if ($conn->connect_error)
+{
+    http_response_code(500);
+    echo json_encode([
+        "id" => -1,
+        "error" => "Database connection failed: " . $conn->connect_error
+    ]);
+    exit();
+}
 ?>
