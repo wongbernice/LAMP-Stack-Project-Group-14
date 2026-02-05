@@ -38,6 +38,25 @@ if( $conn->connect_error )
 {
     returnWithError( $conn->connect_error );
 }
+else
+{
+    $stmt = $conn->prepare("INSERT INTO Users ID,firstName,lastName,Login,Password WHERE ID=? AND firstName=? and lastName=? AND Login=? AND Password =?");
+    $stmt->bind_param("ss", $inData["login"], $inData["password"]);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if( $row = $result->fetch_assoc()  )
+    {
+        // TODO: Register
+    }
+    else
+    {
+        // TODO
+    }
+
+    $stmt->close();
+    $conn->close();
+}
 
 function getRequestInfo()
 {
