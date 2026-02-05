@@ -1,81 +1,39 @@
 <?php
-/************************************************************
- *
- * EXPECTED JSON BODY:
- * {
- *   "firstName": "Angelo",
- *   "lastName": "Villanueva",
- *   "phone": "407-555-1234",
- *   "email": "angelo@example.com",
- *   "userId": 1
- * }
- *
- * RESPONSE FORMAT (consistent):
- *  - Success: {"id": <newContactId or -1>, "message": "...", "error":""}
- *  - Error:   {"id": -1, "error":"..."}
- ************************************************************/
-
-require_once __DIR__ . "/../helpers/headers.php";
-require_once __DIR__ . "/../helpers/request.php";
-require_once __DIR__ . "/../helpers/response.php";
-
-/***********************
- * 1) READ JSON INPUT
- ***********************/
+// copied from colors project
 $inData = getRequestInfo();
 
-/***********************
- * 2) EXTRACT FIELDS
- ***********************/
-$firstName = trim($inData["firstName"] ?? "");
-$lastName  = trim($inData["lastName"] ?? "");
-$phone     = trim($inData["phone"] ?? "");
-$email     = trim($inData["email"] ?? "");
-$userId    = $inData["userId"] ?? "";
+$contact = $inData["contact"];
+$userId = $inData["userId"];
 
-/***********************
- * 3) VALIDATE REQUIRED
- ***********************/
-if ($userId === "" || $firstName === "" || $lastName === "") {
-  returnWithError("Missing required fields: userId, firstName, lastName");
+$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+if ($conn->connect_error)
+{
+    returnWithError( $conn->connect_error );
+}
+else
+{
+    $stmt = $conn->prepare("INSERT into Contacts (UserId,Name) VALUES(?,?)");
+    $stmt->bind_param("ss", $userId, $contact);
+    $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    returnWithError("");
 }
 
-/****************************************************************
- * 4) TEMP (NO DB YET)
- *    - Return success so your frontend can integrate now.
- ****************************************************************/
-returnWithInfo("Add endpoint wired. DB insert is currently disabled.", -1);
-
-/****************************************************************
- * 5) DATABASE(ENABLE LATER)
- ****************************************************************/
-
-/*
-require_once __DIR__ . "/../config/db.php";
-
-// TODO: Make sure your table/column names match your schema.
-// Example schema assumption:
-//   Contacts(ID, FirstName, LastName, Phone, Email, UserID)
-
-$stmt = $conn->prepare(
-  "INSERT INTO Contacts (FirstName, LastName, Phone, Email, UserID)
-   VALUES (?, ?, ?, ?, ?)"
-);
-
-if (!$stmt) {
-  returnWithError($conn->error);
+function getRequestInfo()
+{
+    return json_decode(file_get_contents('php://input'), true);
 }
 
-$stmt->bind_param("ssssi", $firstName, $lastName, $phone, $email, $userId);
-
-if ($stmt->execute()) {
-  $newId = $conn->insert_id;
-  returnWithInfo("Contact added", (int)$newId);
-} else {
-  returnWithError($stmt->error);
+function sendResultInfoAsJson( $obj )
+{
+    header('Content-type: application/json');
+    echo $obj;
 }
 
-$stmt->close();
-$conn->close();
-*/
+function returnWithError( $err )
+{
+    $retValue = '{"error":"' . $err . '"}';
+    sendResultInfoAsJson( $retValue );
+}
 ?>
