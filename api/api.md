@@ -14,7 +14,8 @@ api/
     db.php
   helpers/
     response.php
-    auth.php
+    request.php
+    headers.php
   auth/
     login.php       
     register.php     
@@ -42,13 +43,6 @@ api/
   - Allows endpoints to run queries without repeating connection code.
 - **Used by:** All endpoints that read/write data.
 
-### `api/helpers/response.php`
-- **Purpose:** Standardize JSON responses across the API.
-- **Function:**
-  - Sets `Content-Type: application/json`.
-  - Provides helper functions for consistent responses (success/error).
-  - Sets appropriate HTTP status codes (200/400/401/500).
-- **Used by:** All endpoints for consistent output formatting.
 
 ### `api/helpers/auth.php`
 - **Purpose:** Shared authentication/authorization utilities.
@@ -57,6 +51,19 @@ api/
   - Can provide helpers like `require_auth()` and `get_current_user()`.
   - Returns a 401 JSON response when a request is unauthorized.
 - **Used by:** Protected endpoints (add/edit/delete).
+
+### `api/helpers/response.php`
+- **Purpose:** Standardize JSON responses across the API.
+- **Function:**
+  - Sets `Content-Type: application/json`.
+  - Provides helper functions for consistent responses (success/error).
+  - Sets appropriate HTTP status codes (200/400/401/500).
+- **Used by:** All endpoints for consistent output formatting.
+
+### `api/helpers/request.php`
+
+### `api/helpers/headers.php`
+
 
 ### `api/auth/register.php`
 - **Purpose:** Register a new user account.
@@ -74,6 +81,7 @@ api/
   - Verifies credentials against the database (password hash check).
   - Returns JSON success/error.
 - **Method:** `POST`
+
 
 ### `api/contacts/add.php`
 - **Purpose:** Create a new contact.
@@ -106,3 +114,4 @@ api/
   - Deletes the contact record from the database.
   - Returns JSON success/error.
 - **Method:** `POST`
+
