@@ -1,4 +1,4 @@
-const urlBase = 'http://157.245.13.179/api/'; 
+const urlBase = 'http://157.245.13.179/api/auth'; //will need to change later
 const extension = 'php';
 
 let userId = 0;
@@ -13,15 +13,15 @@ function doLogin()
 	
 	let login = document.getElementById("loginName").value;
 	let password = document.getElementById("loginPassword").value;
-//	var hash = md5( password );
+	//var hash = md5( password );
 	
 	document.getElementById("loginResult").innerHTML = "";
 
 	let tmp = {login:login,password:password};
-//	var tmp = {login:login,password:hash};
+	//var tmp = {login:login,password:hash};
 	let jsonPayload = JSON.stringify( tmp );
 	
-	let url = urlBase + '/Login.' + extension;
+	let url = urlBase + '/login.' + extension;
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -54,6 +54,65 @@ function doLogin()
 	catch(err)
 	{
 		document.getElementById("loginResult").innerHTML = err.message;
+	}
+}
+
+function doSignUp()
+{
+	userId = 0;
+	
+	const fName = document.getElementById("signUpFName").value;
+	const lName = document.getElementById("signUpLName").value;
+	const login = document.getElementById("signUpUName").value;
+	const password = document.getElementById("signUpPass").value;
+	const password2 = document.getElementById("signUpPass2").value;
+
+	
+	document.getElementById("signUpResult").innerHTML = "";
+
+	if(password != password2)
+	{
+		document.getElementById("signUpResult").innerHTML = "Passwords don't match";
+		return;
+	}
+
+	let tmp = {fName: fName, lName:lName, login:login, password:password, password2: password2};
+
+	let jsonPayload = JSON.stringify( tmp );
+	
+	let url = urlBase + '/register.' + extension;
+
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try
+	{
+		xhr.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				let jsonObject = JSON.parse( xhr.responseText );
+				userId = jsonObject.id;
+		
+				if( userId < 1 )
+				{		
+					document.getElementById("signUpResult").innerHTML = "Sign up failed";
+					return;
+				}
+		
+				firstName = jsonObject.fName;
+				lastName = jsonObject.lName;
+
+				saveCookie();
+	
+				window.location.href = "index.html";
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch(err)
+	{
+		document.getElementById("signUpResult").innerHTML = err.message;
 	}
 }
 
