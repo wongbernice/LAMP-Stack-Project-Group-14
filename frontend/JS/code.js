@@ -1,4 +1,4 @@
-const urlBase = 'http://157.245.13.179//api'; //will need to change later
+const urlBase = 'http://157.245.13.179/api/auth'; //will need to change later
 const extension = 'php';
 
 let userId = 0;
@@ -13,15 +13,15 @@ function doLogin()
 	
 	let login = document.getElementById("loginName").value;
 	let password = document.getElementById("loginPassword").value;
-//	var hash = md5( password );
+	//var hash = md5( password );
 	
 	document.getElementById("loginResult").innerHTML = "";
 
 	let tmp = {login:login,password:password};
-//	var tmp = {login:login,password:hash};
+	//var tmp = {login:login,password:hash};
 	let jsonPayload = JSON.stringify( tmp );
 	
-	let url = urlBase + '/Login.' + extension;
+	let url = urlBase + '/login.' + extension;
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -80,7 +80,7 @@ function doSignUp()
 
 	let jsonPayload = JSON.stringify( tmp );
 	
-	let url = urlBase + '/SignUp.' + extension;
+	let url = urlBase + '/register.' + extension;
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
