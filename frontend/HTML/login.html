@@ -1,20 +1,28 @@
+<!--Test Comment-->
+
 <!DOCTYPE html>
-<html>
+<html lnag="en">
     <head>
         <script type="text/javascript" src="../JS/code.js"></script>
         <link rel="stylesheet" href="../CSS/login.css">
     </head>
 
-    <body id="loginBody">
-        <main id="loginMain">
-            <h1 id="loginTitle">Log In</h1>
+    <body class="loginBody">
+        <header class="brandLogin">
+            <span id="brandMarkIcon">📇</span>
+            <h1 id="loginContTitle">Contact Manager</h1>
+        </header>
+        
+        <main class="loginMain">
+            <h2 id="loginTitle">Log In</h2>
             <input type="text" placeholder="Username" id="loginName"/>
             <br>
             <input type="password" placeholder="Password" id="loginPassword"/>
             <br>
             <button type="button" id="loginButton" onclick="doLogin();">Enter</button>
-            <a id="signUpTag" href="signUp.html">Sign Up</a>
             <span id="loginResult"></span>
+            <p id="noAccountp">Don't have an account?</p>
+            <a id="signUpTag" href="signUp.html">Sign Up</a>
         </main>
     </body>
 </html>

@@ -1,20 +1,34 @@
+<!--Test Comment-->
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <script type="text/javascript" src="../JS/code.js"></script>
+        <link rel="stylesheet" href="../CSS/signUp.css">
     </head>
 
-    <body>
-        <h1>Sign Up</h1>
-        <input type="text" placeholder="First Name"/>
-        <br>
-        <input type="text" placeholder="Last Name"/>
-        <br>
-        <input type="text" placeholder="Username"></input>
-        <br>
-        <input type="password" placeholder="Password"></input>
-        <br>
-        <button type="submit">Enter</button>
-        <a href="login.html">Log In</a>
+    <body class="signUpBody">
+        <header class="brandSignUp">
+            <span id="brandMarkIcon">📇</span>
+            <h1 id="signUpContTitle">Contact Manager</h1>
+        </header>
+
+        <main class="signUpMain">
+            <h2 id="signUpTitle">Sign Up</h2>
+            <input type="text" placeholder="First Name" id="signUpFName"/>
+            <br>
+            <input type="text" placeholder="Last Name" id="signUpLName"/>
+            <br>
+            <input type="text" placeholder="Username" id="signUpUName"></input>
+            <br>
+            <input type="password" placeholder="Password" id="signUpPass"></input>
+            <br>
+            <input type="password" placeholder="Confirm Password" id="signUpPass2"></input>
+            <br>
+            <button type="submit" id="signUpButton" onclick="doSignUp();">Enter</button>
+            <span id="signUpResult"></span>
+            <p id="haveAccountp">Already have an account?</p>
+            <a href="login.html" id="loginTag">Login</a>
+        </main>
     </body>
 </html>
