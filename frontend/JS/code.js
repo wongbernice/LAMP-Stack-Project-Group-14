@@ -1,4 +1,4 @@
-const urlBase = 'http://157.245.13.179/api/auth'; //will need to change later
+const urlBase = '/api/auth'; //will need to change later
 const extension = 'php';
 
 let userId = 0;
@@ -46,7 +46,7 @@ function doLogin()
 
 				saveCookie();
 	
-				window.location.href = "index.html";
+				window.location.href = "contacts.html";
 			}
 		};
 		xhr.send(jsonPayload);
@@ -105,7 +105,7 @@ function doSignUp()
 
 				saveCookie();
 	
-				window.location.href = "index.html";
+				window.location.href = "contacts.html";
 			}
 		};
 		xhr.send(jsonPayload);
