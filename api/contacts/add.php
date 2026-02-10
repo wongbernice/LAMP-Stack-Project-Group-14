@@ -1,39 +1,45 @@
 <?php
-// copied from colors project
+
+require_once __DIR__ . "/../helpers/headers.php";
+require_once __DIR__ . "/../helpers/request.php";
+require_once __DIR__ . "/../helpers/response.php";
+require_once __DIR__ . "/../config/db.php";
+
+# read input
 $inData = getRequestInfo();
 
-$contact = $inData["contact"];
-$userId = $inData["userId"];
+# extract files
+$firstName = trim($inData["firstName"] ?? "");
+$lastName  = trim($inData["lastName"] ?? "");
+$phone     = trim($inData["phone"] ?? "");
+$email     = trim($inData["email"] ?? "");
+$userId    = $inData["userId"] ?? "";
 
-$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
-if ($conn->connect_error)
-{
-    returnWithError( $conn->connect_error );
-}
-else
-{
-    $stmt = $conn->prepare("INSERT into Contacts (UserId,Name) VALUES(?,?)");
-    $stmt->bind_param("ss", $userId, $contact);
-    $stmt->execute();
-    $stmt->close();
-    $conn->close();
-    returnWithError("");
+if ($userId === "" || $firstName === "" || $lastName === "") {
+  returnWithError("Missing required fields: userId, firstName, lastName");
 }
 
-function getRequestInfo()
-{
-    return json_decode(file_get_contents('php://input'), true);
+# database
+
+$stmt = $conn->prepare(
+  "INSERT INTO Contacts (FirstName, LastName, Phone, Email, UserID)
+   VALUES (?, ?, ?, ?, ?)"
+);
+
+if (!$stmt) {
+  returnWithError($conn->error);
 }
 
-function sendResultInfoAsJson( $obj )
-{
-    header('Content-type: application/json');
-    echo $obj;
+$stmt->bind_param("ssssi", $firstName, $lastName, $phone, $email, $userId);
+
+if ($stmt->execute()) {
+  $newId = $conn->insert_id;
+  returnWithInfo("Contact added", (int)$newId);
+} else {
+  returnWithError($stmt->error);
 }
 
-function returnWithError( $err )
-{
-    $retValue = '{"error":"' . $err . '"}';
-    sendResultInfoAsJson( $retValue );
-}
+$stmt->close();
+$conn->close();
+
 ?>

@@ -1,5 +1,6 @@
 <?php
 //copied from colors project
+
 $inData = getRequestInfo();
 
 $searchResults = "";
@@ -13,8 +14,8 @@ if ($conn->connect_error)
 else
 {
     $stmt = $conn->prepare("select Name from Contacts where Name like ? and UserID=?");
-    $contactName = "%" . $inData["search"] . "%";
-    $stmt->bind_param("ss", $contactName, $inData["userId"]);
+    $colorName = "%" . $inData["search"] . "%";
+    $stmt->bind_param("ss", $colorName, $inData["userId"]);
     $stmt->execute();
 
     $result = $stmt->get_result();
@@ -64,4 +65,5 @@ function returnWithInfo( $searchResults )
     $retValue = '{"results":[' . $searchResults . '],"error":""}';
     sendResultInfoAsJson( $retValue );
 }
+
 ?>
