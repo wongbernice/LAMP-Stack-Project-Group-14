@@ -34,31 +34,43 @@ $firstName = "";
 $lastName = "";
 
 $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
-$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 if( $conn->connect_error )
 {
     returnWithError( $conn->connect_error );
 }
 else
 {
-    $stmt = $conn->prepare("SELECT Login,Password,ID,firstName,lastName FROM Users WHERE Login=? AND Password =?");
-    $stmt->bind_param("ss", $inData["login"], $inData["password"]);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if( $row = $result->fetch_assoc()  )
-    {
+    $stmt = $conn->prepare("SELECT 1 FROM Users where Login=?");
+    $stmt->bind_param("s", $inData["login"]);
+    if ($stmt->fetch()) {
         returnWithError("User already created");
-    }
-    else
-    {
-        returnWithInfo( $row['Login'], $row['Password'], $row['ID']);
+    } else {
+        $stmt = $conn->prepare("INSERT INTO Users Login,Password,ID,firstName,lastName WHERE Login=? AND Password =? AND firstName=? AND lastName=?");
+        $stmt->bind_param("ssss", $inData["login"], $inData["password"], $inData["firstName"], $inData["lastName"]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        returnWithInfo($row['login'], $row['password']);
         return "New user created.";
     }
 
     $stmt->close();
     $conn->close();
 }
+
+/* Saving Google Gemini response here to mess with:
+function user_exists_pdo($username, $pdo) {
+    // Select a count of records matching the username
+    $sql = "SELECT COUNT(*) FROM users WHERE username = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$username]);
+
+    // Fetch the count
+    $count = $stmt->fetchColumn();
+
+    // Return true if count > 0, false otherwise
+    return $count > 0;
+}
+ */
 
 function getRequestInfo()
 {
