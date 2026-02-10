@@ -40,19 +40,19 @@ if( $conn->connect_error )
 }
 else
 {
-    $stmt = $conn->prepare("SELECT 1 FROM Users where Login=?");
-    $stmt->bind_param("s", $inData["login"]);
-    if ($stmt->fetch()) {
-        returnWithError("User already created");
+    $checkStmt = $conn->prepare("SELECT 1 FROM Users where Login=?"); // Checks if User exists already
+    $checkStmt->bind_param("s", $inData["login"]);
+    if ($checkStmt->fetch()) {
+        returnWithError( "Login already exists" );
     } else {
-        $stmt = $conn->prepare("INSERT INTO Users Login,Password,ID,firstName,lastName WHERE Login=? AND Password =? AND firstName=? AND lastName=?");
+        $stmt = $conn->prepare("INSERT INTO Users Login,Password,FirstName,LastName WHERE Login=? AND Password =? AND FirstName=? AND LastName=?"); // Main register set
         $stmt->bind_param("ssss", $inData["login"], $inData["password"], $inData["firstName"], $inData["lastName"]);
         $stmt->execute();
         $result = $stmt->get_result();
-        returnWithInfo($row['login'], $row['password']);
-        return "New user created.";
+        returnWithInfo($row['firstName'], $row['lastName'], $row['id']);
     }
 
+    $checkStmt->close();
     $stmt->close();
     $conn->close();
 }
@@ -88,6 +88,7 @@ function returnWithError( $err )
     $retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
     sendResultInfoAsJson( $retValue );
 }
+
 
 function returnWithInfo( $firstName, $lastName, $id )
 {
