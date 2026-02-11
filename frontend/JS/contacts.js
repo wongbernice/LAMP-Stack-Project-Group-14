@@ -1,14 +1,20 @@
-const urlBase = "http://157.245.13.179/api/contacts";
+
+// READ
+// contacts.js (updated: modal supports first/last/phone/email + reliable modal close + no alert boxes)
+
+// IMPORTANT: do NOT name this urlBase because code.js already has urlBase.
+// If both load on the same page, you'll get "Identifier 'urlBase' has already been declared".
+const contactsUrlBase = "http://157.245.13.179/api/contacts";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Must be logged in userID set
+  // make sure the user is actually logged in userId cookie set, otherwise return them to login
   if (typeof readCookie === "function") readCookie();
-  if (typeof userId === "undefined" || userId < 1) {
+  if (typeof userId === "undefined" || Number(userId) < 1) {
     window.location.href = "login.html";
     return;
   }
 
-  // UI elements
+  // elements
   const logoutBtn = document.getElementById("logoutBtn");
 
   const openAddBtn = document.getElementById("openAddBtn");
@@ -16,79 +22,116 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeModalBtn = document.getElementById("closeModalBtn");
   const cancelBtn = document.getElementById("cancelBtn");
   const contactForm = document.getElementById("contactForm");
-  const contactNameInput = document.getElementById("contactName");
+
+  // modal inputs these must match contacts.html ids
+  const firstNameInput = document.getElementById("firstName");
+  const lastNameInput = document.getElementById("lastName");
+  const phoneInput = document.getElementById("phone");
+  const emailInput = document.getElementById("email");
 
   const searchInput = document.getElementById("searchInput");
   const searchBtn = document.getElementById("searchBtn");
-  const contactsTbody = document.getElementById("contactsTbody");
   const resultCount = document.getElementById("resultCount");
 
-  // Enable search controls after logged in
-  searchInput.disabled = false;
-  searchBtn.disabled = false;
+  // enable search once logged in
+  if (searchInput) searchInput.disabled = false;
+  if (searchBtn) searchBtn.disabled = false;
 
-  // Events
-  logoutBtn.addEventListener("click", doLogout);
+  // logout
+  if (logoutBtn) logoutBtn.addEventListener("click", doLogout);
 
-  openAddBtn.addEventListener("click", openModal);
-  closeModalBtn.addEventListener("click", closeModal);
-  cancelBtn.addEventListener("click", closeModal);
-  modalBackdrop.addEventListener("click", (e) => {
-    // click outside modal closes it
-    if (e.target === modalBackdrop) closeModal();
-  });
+  // modal open/close events
+  if (openAddBtn) openAddBtn.addEventListener("click", openModal);
+  if (closeModalBtn) closeModalBtn.addEventListener("click", closeModal);
+  if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
 
-  contactForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    addContactFromModal();
-  });
+  // clicking outside closes modal
+  if (modalBackdrop) {
+    modalBackdrop.addEventListener("click", (e) => {
+      if (e.target === modalBackdrop) closeModal();
+    });
+  }
 
-  searchBtn.addEventListener("click", () => {
-    searchContacts(searchInput.value.trim());
-  });
-
-  searchInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      searchContacts(searchInput.value.trim());
+  // escape key closes modal
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modalBackdrop && modalBackdrop.hidden === false) {
+      closeModal();
     }
   });
 
-  // Initial load: call search API with empty string returns all or "No Records Found"
+  // submitting modal form calls add.php
+  if (contactForm) {
+    contactForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      addContactFromModal();
+    });
+  }
+
+  // search button + pressing enter both run search
+  if (searchBtn) {
+    searchBtn.addEventListener("click", () => {
+      searchContacts((searchInput?.value || "").trim());
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        searchContacts(searchInput.value.trim());
+      }
+    });
+  }
+
+  // initial load
   searchContacts("");
 });
 
-//helper function for the add contact modal
+// Modal helpers
 function openModal() {
   const modalBackdrop = document.getElementById("modalBackdrop");
-  const contactNameInput = document.getElementById("contactName");
+  const firstNameInput = document.getElementById("firstName");
+  const lastNameInput = document.getElementById("lastName");
+  const phoneInput = document.getElementById("phone");
+  const emailInput = document.getElementById("email");
+
+  if (!modalBackdrop) return;
+
   modalBackdrop.hidden = false;
-  contactNameInput.value = "";
-  contactNameInput.focus();
+
+  if (firstNameInput) firstNameInput.value = "";
+  if (lastNameInput) lastNameInput.value = "";
+  if (phoneInput) phoneInput.value = "";
+  if (emailInput) emailInput.value = "";
+
+  if (firstNameInput) firstNameInput.focus();
 }
 
 function closeModal() {
   const modalBackdrop = document.getElementById("modalBackdrop");
+  if (!modalBackdrop) return;
   modalBackdrop.hidden = true;
 }
 
-// API CALLS ARE HERE
+// API CALLS
 function addContactFromModal() {
-  const name = document.getElementById("contactName").value.trim();
-  if (!name) return;
+  const firstName = document.getElementById("firstName")?.value.trim() || "";
+  const lastName = document.getElementById("lastName")?.value.trim() || "";
+  const phone = document.getElementById("phone")?.value.trim() || "";
+  const email = document.getElementById("email")?.value.trim() || "";
 
-  // add.php expects: userId, firstName, lastName (required), phone/email optional.
-  const parsed = splitName(name);
+  // add.php requires: userId, firstName, lastName
+  if (!firstName || !lastName) return;
 
   const payload = {
     userId: userId,
-    firstName: parsed.firstName,
-    lastName: parsed.lastName,
-    phone: "",
-    email: ""
+    firstName: firstName,
+    lastName: lastName,
+    phone: phone,
+    email: email
   };
 
-  fetch(urlBase + "/add.php", {
+  fetch(contactsUrlBase + "/add.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
@@ -96,38 +139,41 @@ function addContactFromModal() {
     .then((res) => res.json())
     .then((json) => {
       if (json.error && json.error !== "") {
-        alert(json.error);
+        console.error("Add contact error:", json.error);
         return;
       }
+
       closeModal();
-      // refresh using whatever is currently in the search box
-      const q = document.getElementById("searchInput").value.trim();
+
+      const q = document.getElementById("searchInput")?.value.trim() || "";
       searchContacts(q);
     })
-    .catch(() => alert("Network error while adding contact."));
+    .catch((err) => {
+      console.error("Network error while adding contact.", err);
+    });
 }
 
 function searchContacts(query) {
   const contactsTbody = document.getElementById("contactsTbody");
   const resultCount = document.getElementById("resultCount");
 
-  // Loading state
-  contactsTbody.innerHTML = `
-    <tr>
-      <td class="muted">Loading...</td>
-      <td class="actions"><button class="btn btn--secondary" type="button" disabled>Edit</button></td>
-    </tr>
-  `;
-  resultCount.textContent = "—";
+  if (contactsTbody) {
+    contactsTbody.innerHTML = `
+      <tr>
+        <td class="muted">Loading...</td>
+        <td class="actions"><button class="btn btn--secondary" type="button" disabled>Edit</button></td>
+      </tr>
+    `;
+  }
+  if (resultCount) resultCount.textContent = "—";
 
-  fetch(urlBase + "/search.php", {
+  fetch(contactsUrlBase + "/search.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ search: query, userId: userId })
   })
     .then((res) => res.json())
     .then((json) => {
-      // search.php returns: { results:[ "...", ... ], error:"" } OR { error:"No Records Found" }
       if (json.error && json.error !== "") {
         renderNoContacts(json.error);
         return;
@@ -136,7 +182,8 @@ function searchContacts(query) {
       const results = Array.isArray(json.results) ? json.results : [];
       renderContacts(results);
     })
-    .catch(() => {
+    .catch((err) => {
+      console.error("Network error while searching.", err);
       renderNoContacts("Network error while searching.");
     });
 }
@@ -146,13 +193,15 @@ function renderNoContacts(message) {
   const contactsTbody = document.getElementById("contactsTbody");
   const resultCount = document.getElementById("resultCount");
 
-  contactsTbody.innerHTML = `
-    <tr>
-      <td class="muted">${escapeHtml(message || "No contacts yet")}</td>
-      <td class="actions"><button class="btn btn--secondary" type="button" disabled>Edit</button></td>
-    </tr>
-  `;
-  resultCount.textContent = "0";
+  if (contactsTbody) {
+    contactsTbody.innerHTML = `
+      <tr>
+        <td class="muted">${escapeHtml(message || "No contacts yet")}</td>
+        <td class="actions"><button class="btn btn--secondary" type="button" disabled>Edit</button></td>
+      </tr>
+    `;
+  }
+  if (resultCount) resultCount.textContent = "0";
 }
 
 function renderContacts(names) {
@@ -164,8 +213,6 @@ function renderContacts(names) {
     return;
   }
 
-  // Your current search.php only returns Name strings (not IDs / phone / email)
-  // So we can render names + a disabled Edit button for now (until your edit page/endpoint wiring).
   const rows = names
     .map((name) => {
       const safeName = escapeHtml(String(name));
@@ -180,13 +227,12 @@ function renderContacts(names) {
     })
     .join("");
 
-  contactsTbody.innerHTML = rows;
-  resultCount.textContent = `${names.length}`;
+  if (contactsTbody) contactsTbody.innerHTML = rows;
+  if (resultCount) resultCount.textContent = `${names.length}`;
 }
 
 // LOGOUT
 function doLogout() {
-  // Clear cookie by expiring it
   document.cookie = "firstName=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
   document.cookie = "lastName=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
   document.cookie = "userId=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
@@ -196,25 +242,8 @@ function doLogout() {
 }
 
 // UTILITIES
-function splitName(full) {
-  // If user types only one wordsend lastName as "-" to satisfy required fields
-  const parts = full
-    .replace(/\s+/g, " ")
-    .trim()
-    .split(" ")
-    .filter(Boolean);
-
-  if (parts.length === 0) return { firstName: "", lastName: "-" };
-  if (parts.length === 1) return { firstName: parts[0], lastName: "-" };
-
-  return {
-    firstName: parts[0],
-    lastName: parts.slice(1).join(" ")
-  };
-}
-
 function escapeHtml(str) {
-  return str
+  return String(str)
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
