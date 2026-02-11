@@ -1,10 +1,12 @@
+
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contacts</title>
-  <link rel="stylesheet" href="../CSS/contacts.css" />
+  <link rel="stylesheet" href="../CSS/contacts.css">
 </head>
 <body>
   <header class="topbar">
@@ -80,23 +82,64 @@
       </div>
 
       <form class="form" id="contactForm">
-        <label>
-          <span>Contact Name</span>
-          <input id="contactName" name="contactName" required maxlength="100" placeholder="e.g., John Smith" />
-        </label>
+  <label>
+    <span>First Name</span>
+    <input
+      id="firstName"
+      name="firstName"
+      required
+      maxlength="50"
+      placeholder="e.g., John"
+      autocomplete="given-name"
+    />
+  </label>
 
-        <div class="form__actions">
-          <button class="btn btn--ghost" id="cancelBtn" type="button">Cancel</button>
-          <button class="btn btn--primary" id="saveBtn" type="submit">Save</button>
-        </div>
+  <label>
+    <span>Last Name</span>
+    <input
+      id="lastName"
+      name="lastName"
+      required
+      maxlength="50"
+      placeholder="e.g., Smith"
+      autocomplete="family-name"
+    />
+  </label>
 
-        <p class="form__hint muted">
-          This sends <code>{"contact": "...", "userId": "..."}</code> to <code>/contacts/add.php</code>
-        </p>
-      </form>
+  <label>
+    <span>Phone</span>
+    <input
+      id="phone"
+      name="phone"
+      maxlength="30"
+      placeholder="e.g., (407) 555-1234"
+      autocomplete="tel"
+    />
+  </label>
+
+  <label>
+    <span>Email</span>
+    <input
+      id="email"
+      name="email"
+      maxlength="120"
+      placeholder="e.g., john@email.com"
+      autocomplete="email"
+    />
+  </label>
+
+  <div class="form__actions">
+    <button class="btn btn--ghost" id="cancelBtn" type="button">Cancel</button>
+    <button class="btn btn--primary" id="saveBtn" type="submit">Save</button>
+  </div>
+</form>
+
+
     </div>
   </div>
-  
-  <script src="../JS/contacts.js"></script>
+<script src="../JS/code.js"></script>
+<script src="../JS/contacts.js"></script>
 </body>
 </html>
+
+
