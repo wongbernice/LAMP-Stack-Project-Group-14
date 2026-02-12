@@ -84,4 +84,8 @@
     background-color: #F3D4F3;
 }
 
+#loginButton:hover {
+  filter: brightness(0.95);
+}
+
 #loginResult {color: rgb(200, 1, 1);}
