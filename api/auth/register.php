@@ -27,6 +27,8 @@
  *   - ../helpers/response.php
  */
 // Partially copied from /api/auth/login.php, which was copied from Colors project
+
+// Import JSON sent from code.js
 $inData = getRequestInfo();
 
 $id = 0;
@@ -40,7 +42,8 @@ if( $conn->connect_error )
 }
 else
 {
-    $checkStmt = $conn->prepare("SELECT 1 FROM Users WHERE Login=?"); // Checks if User exists already
+    // Check for duplicates
+    $checkStmt = $conn->prepare("SELECT 1 FROM Users WHERE Login=?");
     $checkStmt->bind_param("s", $inData["login"]);
     $checkStmt->execute();
     $checkStmt->store_result();
@@ -48,34 +51,22 @@ else
     if ($checkStmt->num_rows > 0) {
         returnWithError( "Login already exists" );
     } else {
-        $stmt = $conn->prepare("INSERT INTO Users (Login, Password, FirstName, LastName) VALUES (?, ?, ?, ?)"); // Main register set
+        // Register User with INSERT
+        $stmt = $conn->prepare("INSERT INTO Users (Login, Password, FirstName, LastName) VALUES (?, ?, ?, ?)");
         $stmt->bind_param("ssss", $inData["login"], $inData["password"], $inData["fName"], $inData["lName"]);
         
         if ($stmt->execute()) {
-            returnWithInfo($inData['fName'], $inData['lName'], $conn->insert_id); // Get first+last name from form and id generated from database
+            // Return user's name and the database generated ID to frontend.
+            returnWithInfo($inData['fName'], $inData['lName'], $conn->insert_id);
         } else {
+            // Error if SQL execution fails
             returnWithError("Sign Up Failed");
         }
-        $stmt->close();
+        $stmt->close(); // Close insert statement
     }
-    $checkStmt->close();
-    $conn->close();
+    $checkStmt->close(); // Close duplicate check statement
+    $conn->close(); 
 }
-
-/* Saving Google Gemini response here to mess with:
-function user_exists_pdo($username, $pdo) {
-    // Select a count of records matching the username
-    $sql = "SELECT COUNT(*) FROM users WHERE username = ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$username]);
-
-    // Fetch the count
-    $count = $stmt->fetchColumn();
-
-    // Return true if count > 0, false otherwise
-    return $count > 0;
-}
- */
 
 function getRequestInfo()
 {
