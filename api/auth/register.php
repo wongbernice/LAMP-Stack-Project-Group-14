@@ -40,20 +40,25 @@ if( $conn->connect_error )
 }
 else
 {
-    $stmt = $conn->prepare("SELECT 1 FROM Users where Login=?");
-    $stmt->bind_param("s", $inData["login"]);
-    if ($stmt->fetch()) {
-        returnWithError("User already created");
-    } else {
-        $stmt = $conn->prepare("INSERT INTO Users Login,Password,ID,firstName,lastName WHERE Login=? AND Password =? AND firstName=? AND lastName=?");
-        $stmt->bind_param("ssss", $inData["login"], $inData["password"], $inData["firstName"], $inData["lastName"]);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        returnWithInfo($row['login'], $row['password']);
-        return "New user created.";
-    }
+    $checkStmt = $conn->prepare("SELECT 1 FROM Users WHERE Login=?"); // Checks if User exists already
+    $checkStmt->bind_param("s", $inData["login"]);
+    $checkStmt->execute();
+    $checkStmt->store_result();
 
-    $stmt->close();
+    if ($checkStmt->num_rows > 0) {
+        returnWithError( "Login already exists" );
+    } else {
+        $stmt = $conn->prepare("INSERT INTO Users (Login, Password, FirstName, LastName) VALUES (?, ?, ?, ?)"); // Main register set
+        $stmt->bind_param("ssss", $inData["login"], $inData["password"], $inData["fName"], $inData["lName"]);
+        
+        if ($stmt->execute()) {
+            returnWithInfo($inData['fName'], $inData['lName'], $conn->insert_id); // Get first+last name from form and id generated from database
+        } else {
+            returnWithError("Sign Up Failed");
+        }
+        $stmt->close();
+    }
+    $checkStmt->close();
     $conn->close();
 }
 
@@ -85,13 +90,13 @@ function sendResultInfoAsJson( $obj )
 
 function returnWithError( $err )
 {
-    $retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+    $retValue = '{"id":0,"fName":"","lName":"","error":"' . $err . '"}';
     sendResultInfoAsJson( $retValue );
 }
 
 function returnWithInfo( $firstName, $lastName, $id )
 {
-    $retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
+    $retValue = '{"id":' . $id . ',"fName":"' . $firstName . '","lName":"' . $lastName . '","error":""}';
     sendResultInfoAsJson( $retValue );
 }
 ?>
