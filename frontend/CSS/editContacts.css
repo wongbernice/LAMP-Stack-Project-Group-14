@@ -1,0 +1,188 @@
+:root {
+  /* colors */
+  --mint: #C2E5DF;
+  --pink: #F3D4F3;
+
+  --bg: rgb(231, 231, 231);
+  --card: #ffffff;
+
+  --text: rgba(20, 20, 20, 0.92);
+  --muted: rgba(20, 20, 20, 0.62);
+
+  --border: rgba(20, 20, 20, 0.12);
+  --shadow: 0 16px 40px rgba(0,0,0,.10);
+  --radius: 14px;
+  --radius2: 10px;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
+/* Font for UI */
+body {
+  margin: 0;
+  font-family: system-ui, Arial, sans-serif;
+  color: var(--text);
+  background-color: var(--bg);
+}
+
+.container {
+  max-width: 1250px;
+  margin: 24px auto 64px;
+  padding: 0 16px;
+}
+
+/* Top bar */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+
+  background: var(--pink);
+  border-bottom: 3px solid var(--mint);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* back button */
+.topbar--simple {
+  justify-content: flex-start;
+}
+
+/* Card */
+.card {
+  background: var(--card);
+  border: 3px solid var(--mint);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.card__header {
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px solid rgba(20,20,20,0.10);
+  background: #fff;
+}
+
+/* this keeps header clean when it’s only buttons */
+.card__header--actionsOnly {
+  padding: 16px 18px;
+}
+
+.muted { color: var(--muted); margin: 0; }
+
+/* Buttons */
+.btn {
+  border: none;
+  background: #fff;
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  border: 3px solid rgba(20,20,20,0.10);
+  transition: filter 0.15s ease, transform 0.05s ease;
+}
+
+.btn:hover { filter: brightness(0.95); }
+.btn:active { filter: brightness(0.90); transform: translateY(1px); }
+
+.btn--primary {
+  border: 3px solid var(--pink);
+  background: var(--pink);
+  color: black;
+}
+
+.btn--ghost {
+  background: transparent;
+  border: 3px solid rgba(20,20,20,0.10);
+}
+
+.btn--danger {
+  border: 3px solid #ff0000;   
+  background: #ff0000;         
+  color: #ffffff;              
+}
+
+.btn--danger:hover {
+  filter: brightness(0.95);
+}
+
+.btn--danger:active {
+  filter: brightness(0.90);
+}
+
+/* makes delete and save button same size */
+.btn--header {
+  padding: 10px 12px;
+  min-width: 120px;
+  text-align: center;
+}
+
+.backBtn {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+/* Form layout */
+.form {
+  padding: 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.form--profile { padding-top: 16px; }
+
+/* Blocks */
+.block {
+  border: 3px solid var(--mint);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #fff;
+}
+
+.block__row {
+  padding: 14px 14px;
+  border-bottom: 1px solid rgba(20,20,20,0.10);
+}
+
+.block__row:last-child { border-bottom: none; }
+
+.field span {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.field input {
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: var(--radius2);
+  border: 3px solid var(--pink);
+  outline: none;
+  background: #fff;
+  color: var(--text);
+}
+
+.field input:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(74, 144, 226, 0.3);
+  transition: border-color 0.3s ease;
+}
+
+/* Keeps anything with hidden attribute hidden */
+[hidden] {
+  display: none !important;
+}
+

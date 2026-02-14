@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Edit Contact</title>
+  <link rel="stylesheet" href="../CSS/editContacts.css" />
+</head>
+
+<body>
+  <!-- top bar w just a back button -->
+  <header class="topbar topbar--simple">
+    <button class="btn btn--ghost backBtn" id="backBtn" type="button">← Contacts</button>
+  </header>
+
+  <main class="container">
+    <section class="card">
+
+      <!-- header row: delete in top left and save on top right -->
+      <div class="card__header card__header--actionsOnly">
+        <button class="btn btn--danger btn--header" id="deleteBtn" type="button">Delete Contact</button>
+
+        <div class="headerActions">
+          <button class="btn btn--primary btn--header" id="saveBtn" type="submit" form="editForm">Save</button>
+        </div>
+      </div>
+
+      <!-- form -->
+      <form class="form form--profile" id="editForm" autocomplete="on">
+
+        <!-- name block -->
+        <div class="block">
+          <div class="block__row">
+            <div class="field">
+              <span>First Name</span>
+              <input
+                id="firstName"
+                name="firstName"
+                maxlength="50"
+                autocomplete="given-name"
+                placeholder="e.g., John"
+              />
+            </div>
+          </div>
+
+          <div class="block__row">
+            <div class="field">
+              <span>Last Name</span>
+              <input
+                id="lastName"
+                name="lastName"
+                maxlength="50"
+                autocomplete="family-name"
+                placeholder="e.g., Smith"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- contact info block -->
+        <div class="block">
+          <div class="block__row">
+            <div class="field">
+              <span>Phone</span>
+              <input
+                id="phone"
+                name="phone"
+                maxlength="30"
+                autocomplete="tel"
+                placeholder="(555) 555-5555"
+              />
+            </div>
+          </div>
+
+          <div class="block__row">
+            <div class="field">
+              <span>Email</span>
+              <input
+                id="email"
+                name="email"
+                maxlength="120"
+                autocomplete="email"
+                placeholder="name@email.com"
+              />
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+    </section>
+  </main>
+
+  <script src="../JS/code.js"></script>
+  <!-- later: <script src="../JS/editContacts.js"></script> -->
+
+  <script>
+    document.getElementById("backBtn").addEventListener("click", () => {
+      window.location.href = "contacts.html";
+    });
+  </script>
+</body>
+</html>
+
+
