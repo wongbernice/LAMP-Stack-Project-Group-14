@@ -13,8 +13,7 @@ if ($conn->connect_error)
 }
 else
 {
-    // TODO: Explore changing to search both first and last names.
-    $stmt = $conn->prepare("SELECT FirstName FROM Contacts WHERE (FirstName LIKE ? OR LastName LIKE ? OR Email LIKE ? OR Phone LIKE ?) AND UserID=?");
+    $stmt = $conn->prepare("SELECT * FROM Contacts WHERE ((FirstName LIKE ? OR LastName LIKE ? OR Phone LIKE ? OR Email LIKE ?) AND UserID=?)");
     $contactName = "%" . $inData["search"] . "%";
     $stmt->bind_param("ssssi", $contactName, $contactName, $contactName, $contactName, $inData["userId"]);
     $stmt->execute();

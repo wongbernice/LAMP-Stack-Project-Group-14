@@ -96,7 +96,7 @@ api/
 - **Function:**
   - Returns a list of contacts from the database.
   - Returns JSON array of contacts (can be empty).
-- **Method:** `GET`
+- **Method:** `POST`
 
 ### `api/contacts/edit.php`
 - **Purpose:** Update an existing contact.
