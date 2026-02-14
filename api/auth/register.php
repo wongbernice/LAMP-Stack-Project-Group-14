@@ -27,6 +27,8 @@
  *   - ../helpers/response.php
  */
 // Partially copied from /api/auth/login.php, which was copied from Colors project
+
+// Import JSON sent from code.js
 $inData = getRequestInfo();
 
 $id = 0;
@@ -40,37 +42,31 @@ if( $conn->connect_error )
 }
 else
 {
-    $checkStmt = $conn->prepare("SELECT 1 FROM Users where Login=?"); // Checks if User exists already
+    // Check for duplicates
+    $checkStmt = $conn->prepare("SELECT 1 FROM Users WHERE Login=?");
     $checkStmt->bind_param("s", $inData["login"]);
-    if ($checkStmt->fetch()) {
+    $checkStmt->execute();
+    $checkStmt->store_result();
+
+    if ($checkStmt->num_rows > 0) {
         returnWithError( "Login already exists" );
     } else {
-        $stmt = $conn->prepare("INSERT INTO Users Login,Password,FirstName,LastName WHERE Login=? AND Password =? AND FirstName=? AND LastName=?"); // Main register set
-        $stmt->bind_param("ssss", $inData["login"], $inData["password"], $inData["firstName"], $inData["lastName"]);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        returnWithInfo($row['firstName'], $row['lastName'], $row['id']);
+        // Register User with INSERT
+        $stmt = $conn->prepare("INSERT INTO Users (Login, Password, FirstName, LastName) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $inData["login"], $inData["password"], $inData["fName"], $inData["lName"]);
+        
+        if ($stmt->execute()) {
+            // Return user's name and the database generated ID to frontend.
+            returnWithInfo($inData['fName'], $inData['lName'], $conn->insert_id);
+        } else {
+            // Error if SQL execution fails
+            returnWithError("Sign Up Failed");
+        }
+        $stmt->close(); // Close insert statement
     }
-
-    $checkStmt->close();
-    $stmt->close();
-    $conn->close();
+    $checkStmt->close(); // Close duplicate check statement
+    $conn->close(); 
 }
-
-/* Saving Google Gemini response here to mess with:
-function user_exists_pdo($username, $pdo) {
-    // Select a count of records matching the username
-    $sql = "SELECT COUNT(*) FROM users WHERE username = ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$username]);
-
-    // Fetch the count
-    $count = $stmt->fetchColumn();
-
-    // Return true if count > 0, false otherwise
-    return $count > 0;
-}
- */
 
 function getRequestInfo()
 {
@@ -85,14 +81,14 @@ function sendResultInfoAsJson( $obj )
 
 function returnWithError( $err )
 {
-    $retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+    $retValue = '{"id":0,"fName":"","lName":"","error":"' . $err . '"}';
     sendResultInfoAsJson( $retValue );
 }
 
 
 function returnWithInfo( $firstName, $lastName, $id )
 {
-    $retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
+    $retValue = '{"id":' . $id . ',"fName":"' . $firstName . '","lName":"' . $lastName . '","error":""}';
     sendResultInfoAsJson( $retValue );
 }
 ?>
