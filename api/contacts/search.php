@@ -14,9 +14,9 @@ if ($conn->connect_error)
 else
 {
     // TODO: Explore changing to search both first and last names.
-    $stmt = $conn->prepare("SELECT Name FROM Contacts WHERE Name LIKE ? AND UserID=?");
+    $stmt = $conn->prepare("SELECT FirstName FROM Contacts WHERE (FirstName LIKE ? OR LastName LIKE ? OR Email LIKE ? OR Phone LIKE ?) AND UserID=?");
     $contactName = "%" . $inData["search"] . "%";
-    $stmt->bind_param("ss", $contactName, $inData["userId"]);
+    $stmt->bind_param("ssssi", $contactName, $contactName, $contactName, $contactName, $inData["userId"]);
     $stmt->execute();
 
     $result = $stmt->get_result();
@@ -28,7 +28,7 @@ else
             $searchResults .= ",";
         }
         $searchCount++;
-        $searchResults .= '"' . $row["Name"] . '"';
+        $searchResults .= '"' . $row["FirstName"] . $row["LastName"] . $row["Phone"] . $row["Email"] . '"';
     }
 
     if( $searchCount == 0 )
