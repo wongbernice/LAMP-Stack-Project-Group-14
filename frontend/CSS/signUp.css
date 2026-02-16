@@ -12,6 +12,11 @@
     flex-direction: column;
     box-sizing: border-box;
     overflow-y: auto;
+
+    background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), 
+                      url('../images/background.jpg'); 
+    background-size: cover;
+    background-position: center;
 }
 
 .brandSignUp a{
@@ -20,7 +25,7 @@
     align-items: center;
     gap: 12px;
     background-color: #F3D4F3;
-    border-bottom: 3px solid #C2E5DF;
+    border-bottom: 3px solid #79bfb3;
     margin: 0;
     width: 100vw;
     padding: 14px 16px;

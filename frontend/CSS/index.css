@@ -13,15 +13,16 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     height: 70px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #F3D4F3;
-    border-bottom: 3px solid #C2E5DF;
-    padding: 0 50px;
+    border-bottom: 3px solid #79bfb3;
+    padding: 14px 16px;
     z-index: 1000;
+    box-sizing: border-box;
 }
 
 .navbar-logo a{
