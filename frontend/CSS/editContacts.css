@@ -2,6 +2,7 @@
   /* colors */
   --mint: #C2E5DF;
   --pink: #F3D4F3;
+  --darkmint: #79bfb3;
 
   --bg: rgb(231, 231, 231);
   --card: #ffffff;
@@ -23,7 +24,10 @@ body {
   margin: 0;
   font-family: system-ui, Arial, sans-serif;
   color: var(--text);
-  background-color: var(--bg);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), 
+                    url('../images/background.jpg'); 
+  background-size: cover;
+  background-position: center;
 }
 
 .container {
@@ -40,7 +44,7 @@ body {
   backdrop-filter: blur(10px);
 
   background: var(--pink);
-  border-bottom: 3px solid var(--mint);
+  border-bottom: 3px solid var(--darkmint);
   padding: 14px 16px;
   display: flex;
   align-items: center;
@@ -55,7 +59,7 @@ body {
 /* Card */
 .card {
   background: var(--card);
-  border: 3px solid var(--mint);
+  border: 3px solid var(--darkmint);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   overflow: hidden;
@@ -106,8 +110,8 @@ body {
 }
 
 .btn--danger {
-  border: 3px solid #ff0000;   
-  background: #ff0000;         
+  border: 3px solid #ba2a2a;   
+  background: #ba2a2a;         
   color: #ffffff;              
 }
 
