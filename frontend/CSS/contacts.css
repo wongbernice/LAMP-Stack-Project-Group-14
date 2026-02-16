@@ -2,6 +2,7 @@
   /* colors */
   --mint: #C2E5DF;
   --pink: #F3D4F3;
+  --darkmint: #79bfb3;
   
 
   --bg: rgb(231, 231, 231);
@@ -45,7 +46,7 @@ code {
   backdrop-filter: blur(10px);
 
   background: var(--pink);                 
-  border-bottom: 3px solid var(--mint);    
+  border-bottom: 3px solid var(--darkmint);    
   padding: 14px 16px;
   display: flex;
   align-items: center;
@@ -62,10 +63,10 @@ code {
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 .brand__mark { font-size: 20px; }
-.brand__name { font-weight: 700; letter-spacing: .2px; }
+.brand__name { font-size: 20px; font-weight: bold; }
 
 /* Card with contacts info */
 .card {
@@ -224,12 +225,12 @@ code {
   filter: brightness(0.90);
 }
 
-
-/* Logout button uses this to have pink fill on pink background */
+/* Logout button uses this to have pink fill on pink background 
 .btn--ghost {
   background: transparent;
   border: 3px solid rgba(20,20,20,0.10);
 }
+*/
 
 .iconBtn {
   border: 3px solid rgba(20,20,20,0.10);

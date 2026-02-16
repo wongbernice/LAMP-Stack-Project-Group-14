@@ -28,6 +28,7 @@ body {
 .navbar-logo a{
     display: flex;
     align-items: center;
+    font-size: 20px;
     gap: 12px;
 }
 
