@@ -24,7 +24,7 @@ body {
     z-index: 1000;
 }
 
-.navbar-logo {
+.navbar-logo a{
     display: flex;
     align-items: center;
     gap: 12px;

@@ -14,7 +14,7 @@
     overflow: hidden;
 }
 
-.brandLogin {
+.brandLogin a{
     position: sticky;
     display: flex;
     align-items: center;
@@ -26,6 +26,7 @@
     padding: 14px 16px;
     padding-left: 50px;
 }
+
 
 #loginContTitle {font-size: 20px;}
 

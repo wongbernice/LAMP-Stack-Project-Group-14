@@ -14,7 +14,7 @@
     overflow-y: auto;
 }
 
-.brandSignUp {
+.brandSignUp a{
     position: sticky;
     display: flex;
     align-items: center;
