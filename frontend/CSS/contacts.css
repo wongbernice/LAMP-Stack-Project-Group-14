@@ -4,14 +4,13 @@
   --pink: #F3D4F3;
   --darkmint: #79bfb3;
   
-
   --bg: rgb(231, 231, 231);
   --card: #ffffff;
 
   --text: rgba(20, 20, 20, 0.92);
   --muted: rgba(20, 20, 20, 0.62);
 
-  --border: rgba(20, 20, 20, 0.12);
+  --border: rgba(20, 20, 20, 0.18);
   --shadow: 0 16px 40px rgba(0,0,0,.10);
   --radius: 14px;
   --radius2: 10px;
@@ -24,7 +23,10 @@ body {
   margin: 0;
   font-family: system-ui, Arial, sans-serif;
   color: var(--text);
-  background-color: var(--bg);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), 
+                    url('../images/background.jpg'); 
+  background-size: cover;
+  background-position: center;
 }
 
 code {
@@ -45,14 +47,13 @@ code {
   z-index: 10;
   backdrop-filter: blur(10px);
 
-  background: var(--pink);                 
-  border-bottom: 3px solid var(--darkmint);    
+  background: var(--pink);
+  border-bottom: 3px solid var(--darkmint);
   padding: 14px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-
 
 .topbar__left {
   display: flex;
@@ -71,7 +72,7 @@ code {
 /* Card with contacts info */
 .card {
   background: var(--card);
-  border: 3px solid var(--mint);
+  border: 3px solid var(--darkmint);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   overflow: hidden;
@@ -99,14 +100,13 @@ code {
 .muted { color: var(--muted); margin: 0; }
 
 .toolbar { 
-    padding: 14px 18px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: 
-    space-between;
-    gap: 12px; 
-    }
-
+  padding: 14px 18px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: 
+  space-between;
+  gap: 12px; 
+}
 
 
 .search {
@@ -141,7 +141,6 @@ code {
   border-top: 1px solid rgba(20,20,20,0.10);
 
   max-height: 420px;
-  
 }
 
 .table {
@@ -150,11 +149,19 @@ code {
   min-width: 760px;
 }
 
-.table th, .table td {
+.table th,
+.table td {
   padding: 12px 14px;
-  border-bottom: 1px solid rgba(20,20,20,0.10);
   text-align: left;
   vertical-align: middle;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.table thead th {
+  background-color: rgba(194,229,223,0.28);
 }
 
 .table thead th {
@@ -162,7 +169,6 @@ code {
   letter-spacing: .6px;
   text-transform: uppercase;
   color: var(--muted);
-  background: rgba(194,229,223,0.28); 
 }
 
 .table tbody tr:hover { background: rgba(243,212,243,0.22); }
@@ -172,10 +178,11 @@ code {
   display: flex;
   gap: 8px;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .table thead th.col-actions {
-  padding-left: 64px; 
+  padding-left: 64px;
 }
 
 /* Buttons with hover effect, change to darker color */
