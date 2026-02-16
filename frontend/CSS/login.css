@@ -19,19 +19,67 @@
     background-position: center;
 }
 
-.brandLogin a{
-    position: sticky;
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #F3D4F3;
+    border-bottom: 3px solid #79bfb3;
+    padding: 14px 16px;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.navbar-logo a{
     display: flex;
     align-items: center;
     gap: 12px;
-    background-color: #F3D4F3;
-    border-bottom: 3px solid #79bfb3;;
-    margin: 0;
-    width: 100vw;
-    padding: 14px 16px;
-    padding-left: 50px;
 }
 
+#logo-text {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.navbar-btns {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn {
+  border: none;
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  border: 3px solid rgba(20,20,20,0.10);
+
+  transition: filter 0.15s ease, transform 0.05s ease;
+}
+
+.btn:hover {
+  filter: brightness(0.95);
+}
+
+.btn:active {
+  filter: brightness(0.90);
+  transform: translateY(1px);
+}
+/* Navbar End */
 
 #loginContTitle {font-size: 20px;}
 
