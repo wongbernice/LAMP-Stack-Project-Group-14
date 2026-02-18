@@ -26,6 +26,19 @@ function doLogin()
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+	if(login === "")
+	{
+		document.getElementById("loginResult").innerHTML = "Enter username";
+		return;
+	}
+
+	if(password=== "")
+	{
+		document.getElementById("loginResult").innerHTML = "Enter password";
+		return;
+	}
+
 	try
 	{
 		xhr.onreadystatechange = function() 
@@ -69,6 +82,12 @@ function doSignUp()
 
 	
 	document.getElementById("signUpResult").innerHTML = "";
+
+	if(fName === "" || lName === "" || login === "" || password === "" || password2 === "")
+	{
+		document.getElementById("signUpResult").innerHTML = "Fill in all fields!";
+		return;
+	}
 
 	if(password != password2)
 	{
